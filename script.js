@@ -13,10 +13,12 @@ async function getCharada() {
     try {
         
         const charada = await fetch(baseUrl + aleatorio)
+        console.log(charada)
         charadajson = await charada.json();
+        console.log(charadajson)
         console.log(charadajson.charada);
 
-        pergunta.innerHTML = `${charadajson.charada}`
+        pergunta.innerHTML = `${charadajson.pergunta}`
 
     }
 
