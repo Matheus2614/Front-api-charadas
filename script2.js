@@ -36,12 +36,15 @@ async function buscarListarCharadas() {
 
         console.log(`Charadas recebidas: ${charadas}`)
 
+        exibirCharadasNaTela(charadas)
+
     }
     catch (error) {
         console.log(`Falha ap buscar charada: ${error}`)
         listaCharadasElemento.innerHTML = `<p style = "color: red;">Erro ao carregar charadas: ${error.message}</p>`
     }
 }
+
 
 // FUNÇÕES PARA MANIPULAR O HTML (Atualizar a Página)
 
