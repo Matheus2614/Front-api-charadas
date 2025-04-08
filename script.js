@@ -37,6 +37,10 @@ function conferir() {
             resposta.innerHTML = `Parabéns! A reposta era "${respostaUsuario}"`
         }
 
+        else if (respostaCerta.includes(respostaUsuario)) {
+            resposta.innerHTML = `Parabéns! A resposta era "${respostaCerta}"`
+        }
+
         else {
             resposta.innerHTML = `Não foi dessa vez. A resposta era "${respostaCerta}"`
         }
