@@ -15,6 +15,8 @@ Este programa utiliza a API charadas, criada no curso de desenvolvimento de sist
 * Mostra a resposta da charada e se o usuário acertou ou não
 * Permite a opção de receber uma nova charada
 
+![imagem](img/img.png)
+
 ## Tecnologias
 ### Front-End
 ![Imagem](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
