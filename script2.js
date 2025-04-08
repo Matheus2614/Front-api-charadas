@@ -45,6 +45,52 @@ async function buscarListarCharadas() {
     }
 }
 
+// --- CREATE (Criar uma nova charada) ---
+async function criarCharada(evento) {
+    evento.preventDefault(); // Previne o comportamento padrão do formulário (que é recarregar a página)
+    console.log("Tentando criar nova charada...");
+
+    const pergunta = inputPerguntaCriacao.value;
+    const respostaCharada = inputRespostaCriacao.value;
+
+    if (!pergunta || !respostaCharada) {
+        alert("Por favor, preencha a pergunta e a resposta.");
+        return;
+    }
+
+    const novaCharada = {
+        pergunta: pergunta,
+        resposta: respostaCharada
+    };
+
+    try {
+        const respostaHttp = await fetch(ENDPOINT_CHARADAS, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(novaCharada)
+        });
+
+        const resultadoApi = await respostaHttp.json();
+
+        if (!respostaHttp.ok) {
+            throw new Error(resultadoApi.mensagem || `Erro ao criar charada: ${respostaHttp.status}`);
+        }
+
+        console.log("Charada criada com sucesso!", resultadoApi);
+        alert(resultadoApi.mensagem);
+
+        inputPerguntaCriacao.value = '';
+        inputRespostaCriacao.value = '';
+
+        await buscarListarCharadas();
+
+    } catch (erro) {
+        console.error("Falha ao criar charada:", erro);
+        alert(`Erro ao criar charada: ${erro.message}`);
+    }
+}
 
 // FUNÇÕES PARA MANIPULAR O HTML (Atualizar a Página)
 
@@ -91,8 +137,12 @@ function exibirCharadasNaTela(charadas) {
     }
 }
 
+// Event listeners globais (campainhas principais da página)
+formularioCriacao.addEventListener('submit', criarCharada);
+
+
 // Inicialização da página
 document.addEventListener('DOMContentLoaded',function() {
     console.log("DOM completamente carregado. Iniciando busca de charadas")
     buscarListarCharadas()
-})
+});
