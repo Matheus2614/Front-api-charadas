@@ -43,6 +43,51 @@ async function buscarListarCharadas() {
     }
 }
 
+// FUNÇÕES PARA MANIPULAR O HTML (Atualizar a Página)
+
+// --- Mostrar as charadas na lista ---
+function exibirCharadasNaTela(charadas) {
+    console.log("Atualizando a lista de charadas na tela...");
+    listaCharadasElemento.innerHTML = '';
+
+    if (!charadas || charadas.length === 0) {
+        listaCharadasElemento.innerHTML = '<p>Nenhuma charada cadastrada ainda.</p>';
+        return;
+    }
+
+    for (const charada of charadas) {
+        const elementoCharadaDiv = document.createElement('div');
+        elementoCharadaDiv.classList.add('border', 'border-gray-300', 'p-2', 'mb-3', 'rounded', 'flex', 'justify-between', 'items-center');
+        elementoCharadaDiv.id = `charada-${charada.id}`;
+    
+        elementoCharadaDiv.innerHTML = `
+            <div class="flex-grow mr-3">
+                <strong>${charada.pergunta}</strong>
+                <p><small>Resposta: ${charada.resposta || 'Não definida'}</small></p>
+                <p><small>ID: ${charada.id}</small></p>
+            </div>
+            <div>
+                <button class="edit-btn bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-1 px-2 rounded text-sm ml-1">Editar</button>
+                <button class="delete-btn bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-2 rounded text-sm ml-1">Excluir</button>
+            </div>
+        `;
+    
+        const botaoEditar = elementoCharadaDiv.querySelector('.edit-btn');
+        botaoEditar.addEventListener('click', function() {
+            console.log(`Botão Editar clicado para a charada ID: ${charada.id}`);
+            exibirFormularioAtualizacao(charada.id, charada.pergunta, charada.resposta);
+        });
+    
+        const botaoExcluir = elementoCharadaDiv.querySelector('.delete-btn');
+        botaoExcluir.addEventListener('click', function() {
+            console.log(`Botão Excluir clicado para a charada ID: ${charada.id}`);
+            excluirCharada(charada.id);
+        });
+    
+        listaCharadasElemento.appendChild(elementoCharadaDiv);
+    }
+}
+
 // Inicialização da página
 document.addEventListener('DOMContentLoaded',function() {
     console.log("DOM completamente carregado. Iniciando busca de charadas")
